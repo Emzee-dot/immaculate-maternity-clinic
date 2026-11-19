@@ -31,7 +31,12 @@ nav {
   align-items: center;
   padding: 20px 60px;
   background: inherit;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 nav h2 {
@@ -69,6 +74,13 @@ nav .nav-links button {
   padding: 12px 20px;
   border-radius: 6px;
   cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+nav .nav-links button:hover {
+  background: #555;
+  transform: translateY(-3px);
 }
 
 /* Theme toggle */
@@ -93,7 +105,49 @@ nav .menu-button {
   border: none;
   cursor: pointer;
 }
+/* Hide the currently viewed link on desktop */
+nav .nav-links a.current-section {
+  display: none;
+}
+/* Navigation actions */
+nav .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
+nav .nav-actions button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+nav .nav-actions button:hover {
+  background: #555;
+  transform: translateY(-3px);
+}
+
+nav .nav-actions .theme-button {
+  background: transparent;
+  color: #333;
+  font-size: 20px;
+  padding: 5px;
+  border: none;
+}
+nav .clinic-name {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+nav .clinic-name.visible {
+  opacity: 1;
+  visibility: visible;
+}
 /* DARK MODE */
 
 .dark-mode nav {
@@ -126,19 +180,41 @@ nav .menu-button {
 .dark-mode nav .menu-button {
   color: #edf2f7;
 }
+.dark-mode nav .nav-actions button {
+  background: #edf2f7;
+  color: #111c27;
+}
+
+.dark-mode nav .nav-actions button:hover {
+  background: #c5d1dc;
+}
+
+.dark-mode nav .nav-actions .theme-button {
+  background: transparent;
+  color: #edf2f7;
+}
+
 
 /* TABLET NAVBAR */
 
 @media (min-width: 769px) and (max-width: 992px) {
   nav {
-    padding: 20px 25px;
+    padding: 18px 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 15px;
   }
 
-  nav h2 {
-    font-size: 22px;
+  nav .clinic-name {
+    display: block;
+    font-size: 21px;
+    white-space: nowrap;
   }
 
   nav div.nav-links {
+    display: flex;
+    align-items: center;
     gap: 12px;
   }
 
@@ -149,51 +225,112 @@ nav .menu-button {
   nav .nav-links button {
     padding: 10px 12px;
     font-size: 13px;
+    white-space: nowrap;
+  }
+
+  nav .nav-actions {
+    display: flex;
+    align-items: center;
   }
 
   nav .theme-button {
     font-size: 18px;
   }
+
+  nav .menu-button {
+    display: none;
+  }
 }
+
+
 
 /* MOBILE NAVBAR */
 
 @media (max-width: 768px) {
   nav {
-    padding: 20px;
-    position: relative;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
-  nav h2 {
-    font-size: 22px;
-  }
+  /* Hide clinic name */
+  nav .clinic-name {
+  display: block;
+  font-size: 22px;
+}
 
+  /* Show hamburger only */
   nav .menu-button {
     display: block;
+    margin-left: auto;
   }
 
+  /* Hide theme toggle on mobile */
+  nav .nav-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+nav .theme-button {
+  display: block;
+  margin: 0;
+}
+
+  /* Hide links until hamburger is clicked */
   nav div.nav-links {
     display: none;
   }
 
+  /* Show links when menu is opened */
   nav div.nav-links.open {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 15px;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 15px;
+    padding: 20px;
+    background: #edf2f7;
+    border-radius: 8px;
     order: 4;
   }
 
-  nav .theme-button {
-    margin-left: auto;
-    margin-right: 15px;
+  nav .nav-links a {
+    display: block;
+    padding: 8px 12px;
+    color: #263746;
   }
 
+  /* Highlight current section */
+  nav .nav-links a.current-section {
+    display: block;
+    color: #76c1f7;
+    font-weight: bold;
+    background-color: #102a3a;
+    border-radius: 5px;
+  }
+
+  /* Appointment button */
   nav .nav-links button {
     width: 100%;
+  }
+
+  /* Dark mode menu */
+  .dark-mode nav div.nav-links.open {
+    background: #111c27;
+  }
+
+  .dark-mode nav .nav-links a {
+    color: #edf2f7;
+  }
+
+  .dark-mode nav .nav-links a.current-section {
+    background-color: #263b4d;
+    color: #9bcde5;
   }
 }
 
@@ -255,7 +392,9 @@ img {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .hero-text button:hover {
@@ -325,7 +464,9 @@ img {
   border-radius: 15px;
   background: #fff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .myservices:hover {
@@ -388,7 +529,9 @@ img {
   padding: 80px 30px;
   background: #fff;
   color: #263746;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .about-content {
@@ -423,7 +566,9 @@ img {
   padding: 35px;
   border-radius: 12px;
   background: #f8f1f3;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .about-commitment h3 {
@@ -507,7 +652,9 @@ img {
   border-radius: 12px;
   background-color: #fff;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .why-card:hover {
@@ -580,7 +727,9 @@ img {
   color: #fff;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .cta button:hover {
@@ -651,7 +800,9 @@ img {
   margin-bottom: 10px;
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s ease, padding-left 0.3s ease;
+  transition:
+    color 0.3s ease,
+    padding-left 0.3s ease;
 }
 
 .footer-section a:hover {
@@ -752,7 +903,9 @@ img {
   border-radius: 12px;
   background-color: #fff;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .contact-form h3 {
@@ -783,7 +936,9 @@ img {
   color: #333;
   font-family: inherit;
   font-size: 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .contact-form input::placeholder,
@@ -832,7 +987,9 @@ img {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .contact-form button:hover:not(:disabled) {
@@ -1052,8 +1209,8 @@ img {
 
   .cta h2 {
     font-size: 34px;
-  }
 
+  }
   .footer-container {
     gap: 25px;
     padding: 45px 25px;
@@ -1461,5 +1618,3 @@ img {
     padding: 13px;
   }
 }
-
-
