@@ -9,7 +9,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // 1. Middleware: prepare Express to receive requests
-app.use(cors());
+app.use(cors({
+  origin: "https://illustrious-scone-852fa4.netlify.app"
+}));
 app.use(express.json());
 
 // 2. Email configuration
