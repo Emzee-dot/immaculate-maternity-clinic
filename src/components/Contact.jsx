@@ -208,7 +208,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/contact',
+        'https://immaculate-clinic-api.onrender.com/contact',
         {
           name: formData.name.trim(),
           email: formData.email.trim(),
