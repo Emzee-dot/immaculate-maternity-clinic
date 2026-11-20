@@ -6,6 +6,11 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 
   useEffect(() => {
     const handleScroll = () => {
+
+      setMenuOpen(false); // Close mobile menu when scrolling
+
+  // Keep the rest of your existing code here
+
       const sections = ["home", "about", "services", "contact"];
 
       let currentSection = "home";
@@ -37,7 +42,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 
   return (
     <nav>
-      <h2 className={activeSection === "home" ? "clinic-name visible" : "clinic-name"}>
+      <h2 className={"clinic-name"}>
   Immaculate Maternity Clinic
 </h2>
 

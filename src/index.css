@@ -3,6 +3,16 @@
 *::after {
   box-sizing: border-box;
 }
+/* Prevent sticky navbar from covering section headings */
+section {
+  scroll-margin-top: 100px;
+}
+
+@media (max-width: 768px) {
+  section {
+    scroll-margin-top: 120px;
+  }
+}
 
 html {
   scroll-behavior: smooth;
@@ -30,7 +40,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
-  background: inherit;
+  background: #edf2f7;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -139,14 +150,12 @@ nav .nav-actions .theme-button {
   border: none;
 }
 nav .clinic-name {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-nav .clinic-name.visible {
+  display: block;
   opacity: 1;
   visibility: visible;
+  font-size: 22px;
+  white-space: nowrap;
+  transition: none;
 }
 /* DARK MODE */
 
@@ -242,8 +251,6 @@ nav .clinic-name.visible {
   }
 }
 
-
-
 /* MOBILE NAVBAR */
 
 @media (max-width: 768px) {
@@ -252,74 +259,96 @@ nav .clinic-name.visible {
     position: sticky;
     top: 0;
     z-index: 1000;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 10px;
   }
 
-  /* Hide clinic name */
-  nav .clinic-name {
+  /* Clinic name */
+  /* Keep clinic name visible on mobile */
+nav .clinic-name {
   display: block;
-  font-size: 22px;
+  font-size: clamp(14px, 4vw, 18px);
+  white-space: nowrap;
+  opacity: 1;
+  visibility: visible;
 }
 
-  /* Show hamburger only */
+  /* Hamburger */
   nav .menu-button {
     display: block;
     margin-left: auto;
+    flex-shrink: 0;
   }
 
-  /* Hide theme toggle on mobile */
+  /* Theme toggle */
   nav .nav-actions {
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-}
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    flex-shrink: 0;
+  }
 
-nav .theme-button {
-  display: block;
-  margin: 0;
-}
+  nav .theme-button {
+    display: block;
+    margin: 0;
+  }
 
-  /* Hide links until hamburger is clicked */
+  /* Compact dropdown menu */
   nav div.nav-links {
     display: none;
   }
 
-  /* Show links when menu is opened */
   nav div.nav-links.open {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
-    width: 100%;
-    margin-top: 15px;
-    padding: 20px;
-    background: #edf2f7;
-    border-radius: 8px;
-    order: 4;
-  }
+  display: flex;
+  position: absolute;
+  top: 100%;
+  right: 15px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  width: 190px;
+  margin-top: 5px;
+  padding: 8px;
+  background: #edf2f7;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
 
+nav .nav-links a {
+  display: block;
+  padding: 7px 10px;
+  font-size: 14px;
+}
+
+nav .nav-links button {
+  width: 100%;
+  padding: 9px 10px;
+  font-size: 13px;
+}
   nav .nav-links a {
     display: block;
-    padding: 8px 12px;
+    padding: 10px 12px;
     color: #263746;
+    border-radius: 5px;
   }
 
-  /* Highlight current section */
+  /* Current section */
   nav .nav-links a.current-section {
     display: block;
     color: #76c1f7;
     font-weight: bold;
     background-color: #102a3a;
-    border-radius: 5px;
   }
 
   /* Appointment button */
   nav .nav-links button {
     width: 100%;
+    margin-top: 5px;
   }
 
-  /* Dark mode menu */
+  /* Dark mode */
   .dark-mode nav div.nav-links.open {
     background: #111c27;
   }
@@ -1616,5 +1645,34 @@ img {
 
   .contact-form button {
     padding: 13px;
+  }
+}
+/* GLOBAL SECTION SCROLL SPACING */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+section[id],
+#home,
+#about,
+#services,
+#contact {
+  scroll-margin-top: 100px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 120px;
+  }
+
+  section[id],
+  #home,
+  #about,
+  #services,
+  #contact {
+    scroll-margin-top: 120px;
   }
 }
