@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const express = require("express");
@@ -9,9 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // 1. Middleware: prepare Express to receive requests
-app.use(cors({
-  origin: "https://illustrious-scone-852fa4.netlify.app"
-}));
+app.use(
+  cors({
+    origin: "https://illustrious-scone-852fa4.netlify.app",
+  })
+);
 app.use(express.json());
 
 // 2. Email configuration
@@ -36,7 +39,6 @@ const db = mysql.createConnection({
 app.post("/contact", (req, res) => {
   const { name, email, subject, message } = req.body;
 
-  // Validate required fields
   // Clean submitted values
   const cleanName = name?.trim();
   const cleanEmail = email?.trim();
@@ -103,6 +105,7 @@ app.post("/contact", (req, res) => {
       });
     }
 
+    // Send email notification
     try {
       await transporter.sendMail({
         from: process.env.SMTP_USER,
@@ -129,7 +132,13 @@ ${cleanMessage}
         emailSent: true,
       });
     } catch (emailError) {
-      console.error("Email sending failed:", emailError.message);
+      console.error("Email sending failed:", {
+        message: emailError.message,
+        code: emailError.code,
+        responseCode: emailError.responseCode,
+        command: emailError.command,
+        response: emailError.response,
+      });
 
       return res.status(201).json({
         message:
